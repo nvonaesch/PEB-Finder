@@ -21,9 +21,16 @@ NtQueryInformationProcess_t obtainNtQueryInformationProcessAddress(HMODULE ntdll
     return NtQueryInformationProcess;
 }
 
-PEB obtainProcessEnvironmentBlock(HMODULE ntdll, NtQueryInformationProcess_t NtQueryInformationProcess){
-    
+PEB obtainProcessEnvironmentBlock(HMODULE ntdll, NtQueryInformationProcess_t NtQueryInformationProcess, HANDLE hProcess){
+    PROCESS_BASIC_INFORMATION pbi;
+    ULONG returnLength = 0;
+    PEB peb; 
+    SIZE_T bytesRead = 0;
 
+    NtQueryInformationProcess(hProcess, ProcessBasicInformation, &pbi, sizeof(pbi), &returnLength);
+    
+    ReadProcessMemory(hProcess, pbi.PebBaseAddress, &peb, sizeof(peb), &bytesRead);
+    return peb;
 }
 
 
