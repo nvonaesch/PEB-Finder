@@ -16,7 +16,13 @@ HMODULE loadNTDLLModule(){
     return hNtdll ? hNtdll : LoadLibraryW(L"ntdll.dll");
 }
 
-PEB obtainProcessEnvironmentBlock(){
+NtQueryInformationProcess_t obtainNtQueryInformationProcessAddress(HMODULE ntdll){
+    NtQueryInformationProcess_t NtQueryInformationProcess = (NtQueryInformationProcess_t)GetProcAddress(ntdll, "NtQueryInformationProcess");
+    return NtQueryInformationProcess;
+}
+
+PEB obtainProcessEnvironmentBlock(HMODULE ntdll, NtQueryInformationProcess_t NtQueryInformationProcess){
+    
 
 }
 
