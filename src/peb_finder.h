@@ -2,6 +2,15 @@
 #include <windows.h>
 #include <stdio.h>
 
+typedef struct _PROCESS_BASIC_INFORMATION
+{
+    PVOID Reserved1;
+    PPEB PebBaseAddress;
+    PVOID Reserved2[2];
+    ULONG_PTR UniqueProcessId;
+    ULONG_PTR InheritedFromUniqueProcessId;
+} PROCESS_BASIC_INFORMATION;
+
 typedef struct _UNICODE_STRING {
   USHORT Length;
   USHORT MaximumLength;
