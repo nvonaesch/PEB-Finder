@@ -5,10 +5,19 @@ HANDLE obtainProcessHandle(DWORD pid){
     HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, pid);
 
     if (!hProcess) {
-        DWORD error = GetLastError();
-        sprintf(buffer, "impossible d'ouvrir le PID %lu (code %lu)", pid, error);
         return NULL;
     }
 
     return hProcess;
 }
+
+HMODULE loadNTDLLModule(){
+    HMODULE hNtdll = GetModuleHandleW(L"ntdll.dll");
+    return hNtdll ? hNtdll : LoadLibraryW(L"ntdll.dll");
+}
+
+PEB obtainProcessEnvironmentBlock(){
+
+}
+
+
