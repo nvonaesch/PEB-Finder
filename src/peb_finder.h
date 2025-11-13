@@ -2,6 +2,9 @@
 #include <windows.h>
 #include <stdio.h>
 
+struct _PEB;
+typedef struct _PEB *PPEB;
+
 typedef struct _PROCESS_BASIC_INFORMATION
 {
     PVOID Reserved1;
@@ -66,3 +69,6 @@ typedef enum _PROCESSINFOCLASS {
 typedef NTSTATUS (NTAPI *NtQueryInformationProcess_t)(HANDLE ProcessHandle, PROCESSINFOCLASS ProcessInformationClass, PVOID ProcessInformation, ULONG ProcessInformationLength, PULONG ReturnLength);
 
 HANDLE obtainProcessHandle(DWORD pid);
+HMODULE loadNTDLLModule();
+NtQueryInformationProcess_t obtainNtQueryInformationProcessAddress(HMODULE ntdll);
+PEB obtainProcessEnvironmentBlock(NtQueryInformationProcess_t NtQueryInformationProcess, HANDLE hProcess);
